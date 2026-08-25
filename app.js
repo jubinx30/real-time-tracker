@@ -23,5 +23,8 @@ io.on("connection",function(socket){
 app.get("/",function (req,res){
     res.render("index"); 
 });
+const PORT = process.env.PORT || 3200;
 
-server.listen(3200);
+server.listen(PORT, function () {
+    console.log("Server running on port " + PORT);
+});
