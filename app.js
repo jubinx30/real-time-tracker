@@ -15,8 +15,14 @@ app.use(express.static(path.join(__dirname,"public")));
 io.on("connection",function(socket){
     const usedColors = new Set(connectedMarkerColors.values());
     const markerColor = markerColors.find((color) => !usedColors.has(color)) || markerColors[connectedMarkerColors.size % markerColors.length];
-    const userName = `User ${nextUserNumber++}`;
+    let userName = `User ${nextUserNumber++}`;
     connectedMarkerColors.set(socket.id, markerColor);
+
+    socket.on("set-name",function(name){
+        if(typeof name === "string" && name.trim()){
+            userName = name.trim().slice(0, 32);
+        }
+    });
 
     socket.on("send-location",function(data){
         io.emit("recieve-location",{id: socket.id, ...data, color: markerColor, name: userName});
