@@ -33,9 +33,9 @@
     } else{
         const icon = L.divIcon({
             className: "user-marker",
-            html: `<span style="background-color: ${color}"></span>`,
-            iconSize: [24, 24],
-            iconAnchor: [12, 12],
+            html: `<svg viewBox="0 0 32 42" aria-hidden="true"><path fill="${color}" stroke="#ffffff" stroke-width="2" d="M16 1C8.3 1 2 7.3 2 15c0 10.5 14 25 14 25s14-14.5 14-25C30 7.3 23.7 1 16 1z"/><circle cx="16" cy="15" r="5" fill="#ffffff"/></svg>`,
+            iconSize: [32, 42],
+            iconAnchor: [16, 40],
         });
         markers[id] = L.marker([latitude,longitude], {icon}).addTo(map);
     }
