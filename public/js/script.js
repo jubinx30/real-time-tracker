@@ -25,14 +25,19 @@
  }).addTo(map);
 
  const markers = {};
-
  socket.on("recieve-location",(data)=>{
-    const{id,latitude,longitude}=data;
+     const{id,latitude,longitude,color}=data;
     map.setView([latitude,longitude]);
     if(markers[id]){
         markers[id].setLatLng([latitude,longitude]);
     } else{
-        markers[id] = L.marker([latitude,longitude]).addTo(map);
+        const icon = L.divIcon({
+            className: "user-marker",
+            html: `<span style="background-color: ${color}"></span>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
+        });
+        markers[id] = L.marker([latitude,longitude], {icon}).addTo(map);
     }
  });
 
