@@ -28,3 +28,19 @@ body{
     height: 42px;
     filter: drop-shadow(0 1px 2px rgb(0 0 0 / 45%));
 }
+
+.center-location-button{
+    margin: 0 0 20px 20px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 4px;
+    background: #ffffff;
+    color: #222222;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 40%);
+    cursor: pointer;
+    font: 600 14px/1 sans-serif;
+}
+
+.center-location-button:hover{
+    background: #f2f2f2;
+}

@@ -23,10 +23,29 @@
 
  
  const map = L.map("map").setView([0,0],15);
+ let myLocation = null;
+ let hasCenteredInitially = false;
  
  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
     attribution:"OpenStreetMap"
  }).addTo(map);
+
+ const centerButton = L.control({position: "bottomleft"});
+ centerButton.onAdd = function(){
+    const button = L.DomUtil.create("button", "center-location-button");
+    button.type = "button";
+    button.title = "Center map on my location";
+    button.setAttribute("aria-label", "Center map on my location");
+    button.innerHTML = "Center on me";
+    L.DomEvent.disableClickPropagation(button);
+    L.DomEvent.on(button, "click", function(){
+        if(myLocation){
+            map.setView(myLocation, map.getZoom());
+        }
+    });
+    return button;
+ };
+ centerButton.addTo(map);
 
  const markers = {};
 
@@ -55,6 +74,13 @@
 
  socket.on("recieve-location",(data)=>{
      const{id,latitude,longitude,color,name}=data;
+    if(id === socket.id){
+        myLocation = [latitude, longitude];
+        if(!hasCenteredInitially){
+            map.setView(myLocation, map.getZoom());
+            hasCenteredInitially = true;
+        }
+    }
     if(markers[id]){
         markers[id].setLatLng([latitude,longitude]);
         markers[id].setPopupContent(getPopupContent(name, latitude, longitude));
