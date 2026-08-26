@@ -55,7 +55,6 @@
 
  socket.on("recieve-location",(data)=>{
      const{id,latitude,longitude,color,name}=data;
-    map.setView([latitude,longitude]);
     if(markers[id]){
         markers[id].setLatLng([latitude,longitude]);
         markers[id].setPopupContent(getPopupContent(name, latitude, longitude));
